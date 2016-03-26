@@ -238,6 +238,16 @@ class PluginHelpers_JSONRPC():
         res = json.loads(res)
         return res['result']['muted']
 
+    def GetSystemTime(self):
+        res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels',{ 'labels': ['System.Time'] })
+        return res
+
+    def GetProperty(self,prop):
+        proparray = []
+        proparray.append(prop) 
+        res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels',{ 'labels': proparray } )
+        return res
+
 
 ph = PluginHelpers_JSONRPC()
 
@@ -329,6 +339,21 @@ def do_system_getkernel(self, args):
 ####################
 
 
+def help_system_gettime(self):
+    print 'system_gettime: Display Kodi Time'
+    print 'usage: system_gettime'
+
+
+def do_system_gettime(self, args):
+    res = ph.GetSystemTime()
+    res2 = json.loads(res)
+    print res2['result']['System.Time']
+
+
+
+####################
+
+
 def help_system_getbuild(self):
     print 'system_getbuild: Display kodi build version'
     print 'usage: system_getbuild'
@@ -366,6 +391,22 @@ def help_system_ismuted(self):
 
 def do_system_ismuted(self, args):
     print ph.SystemIsMuted()
+
+####################
+
+def help_system_getproperty(self):
+    print 'system_getproperty: Show value of a INFO Lable'
+    print 'usage: system_getproperty'
+
+
+def do_system_getproperty(self, args):
+    (args, _options) = parse_arguments(args)
+
+    pl = args.pop(0)
+    val = ph.GetProperty(pl)
+    val = json.loads(val)
+    print val['result'][pl]
+
 
 ####################
 
