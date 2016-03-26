@@ -17,7 +17,7 @@ system_getvolume
 system_connect          
 system_ismuted    
 system_getbuild         
-system_mutetoggle 
+system_mutetoggle
 system_getkernel
 system_quit       
 
