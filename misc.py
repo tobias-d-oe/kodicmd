@@ -248,6 +248,10 @@ class PluginHelpers_JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels',{ 'labels': proparray } )
         return res
 
+    def GetAddons(self):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddons',  )
+        return res
+
 
 ph = PluginHelpers_JSONRPC()
 
@@ -609,6 +613,21 @@ def complete_movie_details(self, text, line, beg, end):
 
 ####################
 
+####################
+
+
+def help_addon_list(self):
+    print 'addon_list: Show installed Addons'
+    print 'usage: addon_list'
+
+
+def do_addon_list(self, args):
+    res = ph.GetAddons()
+    res2 = json.loads(res)
+    for res in res2['result']['addons']:
+        print res['addonid']
+
+####################
 
 
 
