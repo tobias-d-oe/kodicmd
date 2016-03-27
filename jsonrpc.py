@@ -202,4 +202,7 @@ class JSONRPC():
         res2 = res['result']['addon'][prop]
         return res2
 
+    def ExecuteAddon(self,addonid):
+        res = self.getJsonResponse(self.host, self.port,'Addons.ExecuteAddon',{ 'addonid': '%s' % (addonid) }  )
+        return res
 

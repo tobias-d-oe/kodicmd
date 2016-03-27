@@ -99,3 +99,21 @@ def complete_addon_getpropertybyid(self, text, line, beg, end):
     if len(parts) > 2:
         return tab_completer(['name','version','summary','description', 'path', 'author', 'thumbnail', 'disclaimer', 'fanart', 'dependencies', 'broken', 'extrainfo', 'rating', 'enabled'], text)
 
+####################
+
+def help_addon_execute(self,addonid):
+    print 'addon_execute: Start an Addon'
+    print 'usage: addon_execute'
+
+
+def do_addon_execute(self, args):
+    res = self.ph.ExecuteAddon(args)
+    print "done"
+
+def complete_addon_execute(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(self.ph.GetAddons(), text)
+
+
