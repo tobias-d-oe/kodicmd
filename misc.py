@@ -250,7 +250,35 @@ class PluginHelpers_JSONRPC():
 
     def GetAddons(self):
         res = self.getJsonResponse(self.host, self.port,'Addons.GetAddons',  )
+        res2 = json.loads(res)
+        out = []
+        for res in res2['result']['addons']:
+             out.append(res['addonid'])
+        return out
+
+    def GetAddonDetail(self,prop):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (prop), 'properties':['name','version','summary','description','path','author','thumbnail','fanart','dependencies','broken','extrainfo','rating','enabled'] }  )
         return res
+
+    def GetAddonNamebyID(self,addonid):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (addonid), 'properties':['name'] }  )
+        res = json.loads(res)
+        res2 = res['result']['addon']['name']
+        return res2
+
+    def GetAddonVersionbyID(self,addonid):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (addonid), 'properties':['version'] }  )
+        res = json.loads(res)
+        res2 = res['result']['addon']['version']
+        return res2
+
+    def GetAddonPropertybyID(self,addonid,prop):
+        p=[]
+        p.append(prop)
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (addonid), 'properties': p }  )
+        res = json.loads(res)
+        res2 = res['result']['addon'][prop]
+        return res2
 
 
 ph = PluginHelpers_JSONRPC()
@@ -541,6 +569,17 @@ def do_movie_list(self, args):
     for m in mov:
         print m
 
+####################
+
+
+def help_movie_count(self):
+    print 'movie_count: Total of movies'
+    print 'usage: movie_count'
+
+
+def do_movie_count(self, args):
+    print len( ph.LibraryGetMovies() )
+
 
 ####################
 
@@ -558,8 +597,8 @@ def do_movie_play(self, args):
 
 def complete_movie_play(self, text, line, beg, end):
     parts = line.split(' ')
-
-    if len(parts) == 2:
+    if len(parts) >= 2:
+       
         return tab_completer(ph.LibraryGetMovies(), text)
 
 ####################
@@ -622,12 +661,97 @@ def help_addon_list(self):
 
 
 def do_addon_list(self, args):
-    res = ph.GetAddons()
-    res2 = json.loads(res)
-    for res in res2['result']['addons']:
-        print res['addonid']
+    res2 = ph.GetAddons()
+    #res2 = json.loads(res)
+    for res in res2:
+        print res
 
 ####################
+def help_addon_count(self):
+    print 'addon_count: Total of Addons'
+    print 'usage: addon_count'
+
+
+def do_addon_count(self, args):
+    res = ph.GetAddons()
+    res2 = json.loads(res)
+    print len(res2['result']['addons'])
+
+####################
+
+def help_addon_detail(self):
+    print 'addon_detail: Play a movie'
+    print 'usage: addon_detail Dad Jahr in dem die Welt untergieng'
+
+
+def do_addon_detail(self, args):
+    (args, _options) = parse_arguments(args)
+    res=ph.GetAddonDetail(args.pop(0))
+    res2=json.loads(res)
+    daddon=res2['result']['addon'] 
+    print "Addonname        : %s" % (daddon['name'])
+    print "Version          : %s" % (daddon['version'])
+    print "ID               : %s" % (daddon['addonid'])
+    print "Author           : %s" % (daddon['author'])
+    print "Broken           : %s" % (daddon['broken'])
+    print "Dependencies     : %s" % (daddon['dependencies'])
+    print "Description      : %s" % (daddon['description'])
+    print "Summary          : %s" % (daddon['summary'])
+    print "Rating           : %s" % (daddon['rating'])
+    print "Path             : %s" % (daddon['path'])
+    print "Disclaimer       : %s" % (daddon['disclaimer'])
+    print "Extrainfo        : %s" % (daddon['extrainfo'])
+    print "Enabled          : %s" % (daddon['enabled'])
+    print "Thumbnail        : %s" % (daddon['thumbnail'])
+    print "Fanart           : %s" % (daddon['fanart'])
+
+def complete_addon_detail(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(ph.GetAddons(), text)
+
+####################
+####################
+def help_addon_getnamebyid(self,addonid):
+    print 'addon_getnamebyid: Total of Addons'
+    print 'usage: addon_getnamebyid'
+
+
+def do_addon_getnamebyid(self, args):
+    res = ph.GetAddonNamebyID(args)
+    print res
+
+def complete_addon_getnamebyid(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(ph.GetAddons(), text)
+
+
+
+####################
+
+
+def help_addon_getpropertybyid(self,addonid,property):
+    print 'addon_getpropertybyid: Total of Addons'
+    print 'usage: addon_getpropertybyid'
+
+
+def do_addon_getpropertybyid(self, args):
+    (args, _options) = parse_arguments(args)
+
+    res = ph.GetAddonPropertybyID(args.pop(0),args.pop(0))
+    print res
+
+def complete_addon_getpropertybyid(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(ph.GetAddons(), text)
+    if len(parts) > 2:
+        return tab_completer(['name','version','summary','description', 'path', 'author', 'thumbnail', 'disclaimer', 'fanart', 'dependencies', 'broken', 'extrainfo', 'rating', 'enabled'], text)
+
 
 
 
