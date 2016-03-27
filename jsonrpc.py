@@ -55,6 +55,11 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'Application.GetProperties', { 'properties': ['volume'] })
         return res
 
+    def GetName(self):
+        res = self.getJsonResponse(self.host, self.port,'Application.GetProperties', { 'properties': ['name'] })
+        return res
+
+
     def SystemSetVolume(self,vol):
         res = self.getJsonResponse(self.host, self.port,'Application.SetVolume', { 'volume': int(vol) })
         return res

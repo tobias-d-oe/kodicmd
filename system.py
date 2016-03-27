@@ -1,5 +1,20 @@
 from utils import *
 
+
+####################
+
+
+def help_system_getname(self):
+    print 'system_getname: Display system name'
+    print 'usage: system_getname'
+
+
+def do_system_getname(self, args):
+    res = self.ph.GetName()
+    res2 = json.loads(res)
+    print res2['result']['name']
+
+
 ####################
 
 

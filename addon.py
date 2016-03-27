@@ -43,6 +43,7 @@ def do_addon_detail(self, args):
     print "Version          : %s" % (daddon['version'])
     print "ID               : %s" % (daddon['addonid'])
     print "Author           : %s" % (daddon['author'])
+    print "Enabled          : %s" % (str(daddon['enabled']))
     print "Broken           : %s" % (daddon['broken'])
     print "Dependencies     : %s" % (daddon['dependencies'])
     print "Description      : %s" % (daddon['description'])
@@ -51,7 +52,6 @@ def do_addon_detail(self, args):
     print "Path             : %s" % (daddon['path'])
     print "Disclaimer       : %s" % (daddon['disclaimer'])
     print "Extrainfo        : %s" % (daddon['extrainfo'])
-    print "Enabled          : %s" % (daddon['enabled'])
     print "Thumbnail        : %s" % (daddon['thumbnail'])
     print "Fanart           : %s" % (daddon['fanart'])
 
