@@ -116,4 +116,24 @@ def complete_addon_execute(self, text, line, beg, end):
     if len(parts) == 2:
         return tab_completer(self.ph.GetAddons(), text)
 
+####################
+
+def help_addon_enabled(self,addonid):
+    print 'addon_enabled: Set Addon enabled/disabled'
+    print 'usage: addon_enabled'
+
+
+def do_addon_enabled(self, args):
+    (args, _options) = parse_arguments(args)
+
+    res = self.ph.SetEnabled(args[0],args[1])
+    print res
+
+def complete_addon_enabled(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(self.ph.GetAddons(), text)
+    if len(parts) > 2:
+        return tab_completer(['true','false'], text)
 

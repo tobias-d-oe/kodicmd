@@ -220,3 +220,6 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'Addons.ExecuteAddon',{ 'addonid': '%s' % (addonid) }  )
         return res
 
+    def SetEnabled(self,addonid,isenabled):
+        res = self.getJsonResponse(self.host, self.port,'Addons.SetAddonEnabled',{ 'addonid': '%s' % (addonid), 'enabled': json.loads(isenabled) }  )
+        return res
