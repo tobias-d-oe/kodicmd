@@ -62,6 +62,8 @@ def help_system_getkernel(self):
 
 
 def do_system_getkernel(self, args):
+    dummy = self.ph.SystemGetKernel()
+    time.sleep(1)
     print self.ph.SystemGetKernel()
     #res2 = json.loads(res)
     #print res2['result']['volume']
