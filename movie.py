@@ -51,12 +51,12 @@ def complete_movie_play(self, text, line, beg, end):
 
 ####################
 
-def help_movie_details(self):
-    print 'movie_details: Get movie details'
-    print 'usage: movie_details Das Jahr in dem die Welt untergieng'
+def help_movie_getdetails(self):
+    print 'movie_getdetails: Get movie details'
+    print 'usage: movie_getdetails Das Jahr in dem die Welt untergieng'
 
 
-def do_movie_details(self, args):
+def do_movie_getdetails(self, args):
     (args, _options) = parse_arguments(args)
     #print args.pop(0)
     res = self.ph.MovieDetails(self.ph.Movie2ID(args.pop(0)))
@@ -92,10 +92,31 @@ def do_movie_details(self, args):
     print "Trailer        : %s" % (res['trailer'])
     
 
-def complete_movie_details(self, text, line, beg, end):
+def complete_movie_getdetails(self, text, line, beg, end):
     parts = line.split(' ')
 
     if len(parts) == 2:
         return tab_completer(self.ph.LibraryGetMovies(), text)
 
 ####################
+
+def help_movie_setdetail(self):
+    print 'movie_setdetail: Set a property of a movie'
+    print 'usage: movie_setdetail \'Das Jahr in dem die Welt untergieng\' fanart \'file://Fanarts/myfanart.jpeg\''
+
+
+def do_movie_setdetail(self, args):
+    (args, _options) = parse_arguments(args)
+    res = self.ph.MovieSetDetail(args[0],args[1],args[2])
+    print res
+
+
+def complete_movie_setdetail(self, text, line, beg, end):
+    parts = line.split(' ')
+    if len(parts) == 2:
+        return tab_completer(self.ph.LibraryGetMovies(), text)
+    if len(parts) == 3:
+        return tab_completer(['trailer','top250','runtime','playcount','sorttitle','cast','country','originaltitle','movieid','dateadded','title','rating','tagline','file','setid','plot','votes','fanart','mpaa','streamdetails','writer','thumbnail','resume','director','imdbnumber','studio','genre'], text)
+
+
+

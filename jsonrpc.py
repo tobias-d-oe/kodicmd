@@ -88,6 +88,18 @@ class JSONRPC():
                 res=mov['movieid']
         return res
 
+
+#{"jsonrpc": "2.0", "id": 1, "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : XBMCMOVIEIDINTEGER, "tag":["YOURTAGHERE"]}}
+    def MovieSetDetail(self,movie,key,value):
+        va=[]
+        print "%s - %s - %s" % (movie,key,value)
+        movieid = self.Movie2ID(movie)
+        va.append(value)
+        res = self.getJsonResponse(self.host, self.port,'VideoLibrary.SetMovieDetails', {'movieid' : int(movieid), '%s' % (key): value})
+        print "2"
+        print res
+
+
     def PlayerOpen(self,movieid):
         res = self.getJsonResponse(self.host, self.port,'Player.Open', {"item":{"movieid": movieid }})
 
@@ -101,6 +113,9 @@ class JSONRPC():
     def MovieDetails(self,movieid):
         res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovieDetails', {"movieid":movieid,"properties":["director","genre","plot","rating","runtime","sorttitle","studio","title","trailer","playcount","originaltitle","tagline","imdbnumber","year","set","setid","dateadded","top250","file","thumbnail","resume","streamdetails","country","tag","mpaa","fanart","cast","votes","writer"]}, id='libMovies')
         return res
+
+
+
 
     def SystemPlatform(self):
         res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoBooleans',{"booleans":["System.Platform.Linux","System.Platform.Linux.RaspberryPi","System.Platform.Windows","System.Platform.OSX","System.Platform.IOS","System.Platform.Darwin","System.Platform.ATV2","System.Platform.Android"]})
@@ -126,7 +141,6 @@ class JSONRPC():
 
         if res['result']['System.Platform.Android']:
             return "Android"
-
 
     def SystemIsMuted(self):
         res = self.getJsonResponse(self.host, self.port,'Application.GetProperties',{'properties':['volume','muted']})
