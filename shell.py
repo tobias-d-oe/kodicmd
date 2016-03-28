@@ -44,7 +44,7 @@ from utils import *
 
 
 class KodiShell(Cmd):
-    __module_list = ['misc', 'utils', 'addon', 'movie', 'player', 'system']
+    __module_list = ['misc', 'utils', 'addon', 'movie', 'player', 'system', 'input', 'media']
 
     # a SyntaxError is thrown if we don't wrap this in an 'exec'
     for module in __module_list:

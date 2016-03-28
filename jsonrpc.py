@@ -228,3 +228,16 @@ class JSONRPC():
     def SetEnabled(self,addonid,isenabled):
         res = self.getJsonResponse(self.host, self.port,'Addons.SetAddonEnabled',{ 'addonid': '%s' % (addonid), 'enabled': json.loads(isenabled) }  )
         return res
+
+
+    def VideoLibraryScan(self,path=""):
+        res = self.getJsonResponse(self.host, self.port,'VideoLibrary.Scan',{ 'directory': '%s' % (path) }  )
+        return res
+
+    def RC(self,rc):
+        res = self.getJsonResponse(self.host, self.port,'Input.ExecuteAction',{ 'action': '%s' % (rc) }  )
+        return res
+   
+    def ListSources(self,src):
+        res = self.getJsonResponse(self.host, self.port,'Files.GetSources',{'media':'%s' % (src)})
+        return res
