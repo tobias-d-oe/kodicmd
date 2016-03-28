@@ -18,6 +18,35 @@ def do_addon_list(self, args):
 
 ####################
 
+def help_addon_listbroken(self):
+    print 'addon_listbroken: Show installed Addons'
+    print 'usage: addon_listbroken'
+
+
+def do_addon_listbroken(self, args):
+    res2 = self.ph.GetBrokenAddons()
+    for res in res2:
+        print res
+
+
+
+
+####################
+
+def help_addon_listdisabled(self):
+    print 'addon_listdisabled: Show disabled Addons'
+    print 'usage: addon_listdisabled'
+
+
+def do_addon_listdisabled(self, args):
+    res2 = self.ph.GetDisabledAddons()
+    for res in res2:
+        print res
+
+
+
+####################
+
 def help_addon_count(self):
     print 'addon_count: Total of Addons'
     print 'usage: addon_count'

@@ -197,6 +197,32 @@ class JSONRPC():
              out.append(res['addonid'])
         return out
 
+    def GetBrokenAddons(self):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddons',  )
+        res2 = json.loads(res)
+        out = []
+        out2 = []
+        for res in res2['result']['addons']:
+             res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (res['addonid']), 'properties':['name','broken'] }  )
+             res = json.loads(res)
+             if res['result']['addon']['broken'] != False:
+                 out.append(res['result']['addon']['addonid'])
+        return out
+
+    def GetDisabledAddons(self):
+        res = self.getJsonResponse(self.host, self.port,'Addons.GetAddons',  )
+        res2 = json.loads(res)
+        out = []
+        out2 = []
+        for res in res2['result']['addons']:
+             res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (res['addonid']), 'properties':['name','enabled'] }  )
+             res = json.loads(res)
+             if res['result']['addon']['enabled'] != True:
+                 out.append(res['result']['addon']['addonid'])
+        return out
+
+
+
     def GetAddonDetail(self,prop):
         res = self.getJsonResponse(self.host, self.port,'Addons.GetAddonDetails',{ 'addonid': '%s' % (prop), 'properties':['name','version','summary','description','path','author','thumbnail','fanart','dependencies','broken','extrainfo','rating','enabled'] }  )
         return res
