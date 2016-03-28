@@ -1,5 +1,18 @@
 from utils import *
 
+####################
+
+
+def help_system_ping(self):
+    print 'system_ping: ping JSON-RPC Interface'
+    print 'usage: system_ping'
+
+
+def do_system_ping(self, args):
+    res = self.ph.SystemPing()
+    print res
+
+
 
 ####################
 
@@ -193,6 +206,20 @@ def do_system_getversion(self, args):
     print "Minor      : %s" % (json_res['minor'])
     print "Tag        : %s" % (json_res['tag'])
     print "Revision   : %s" % (json_res['revision'])
+
+####################
+
+def help_system_getapiversion(self):
+    print 'system_getapiversion: Show JSON RPC version'
+    print 'usage: system_getapiversion'
+
+
+def do_system_getapiversion(self, args):
+    json_res = self.ph.SystemGetAPIVersion()
+    print "Major      : %s" % (json_res['major'])
+    print "Minor      : %s" % (json_res['minor'])
+    print "Patch      : %s" % (json_res['patch'])
+
 
 
 

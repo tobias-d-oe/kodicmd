@@ -1,6 +1,7 @@
 import json
 import urllib2
 
+
 class JSONRPC():
     def __init__(self):
         self.host     = '127.0.0.1'
@@ -166,6 +167,13 @@ class JSONRPC():
         res = json.loads(res)
         return res['result']['version']
 
+    def SystemGetAPIVersion(self):
+        res = self.getJsonResponse(self.host, self.port,'JSONRPC.Version',)
+        res = json.loads(res)
+        return res['result']['version']
+        #resstr = "%s.%s.%s" % (res['result']['version']['major'],res['result']['version']['minor'],res['result']['version']['patch']
+        #return resstr
+
     def SystemGetKernel(self):
         #res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels","params":{"labels":["System.KernelVersion","System.BuildVersion"]}}
         res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels',{'labels':['System.KernelVersion']})
@@ -187,6 +195,11 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'Application.Quit', )
         res = json.loads(res)
         return res['result']['muted']
+
+    def SystemPing(self):
+        res = self.getJsonResponse(self.host, self.port,'JSONRPC.Ping', )
+        res = json.loads(res)
+        return res['result']
 
     def GetSystemTime(self):
         res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels',{ 'labels': ['System.Time'] })
