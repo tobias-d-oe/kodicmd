@@ -44,7 +44,7 @@ from utils import *
 
 
 class KodiShell(Cmd):
-    __module_list = ['misc', 'utils', 'addon', 'movie', 'player', 'system', 'input', 'media', 'gui']
+    __module_list = ['json', 'misc', 'utils', 'addon', 'movie', 'player', 'system', 'input', 'media', 'gui']
 
     # a SyntaxError is thrown if we don't wrap this in an 'exec'
     for module in __module_list:
@@ -59,7 +59,7 @@ class KodiShell(Cmd):
     #prompt_template = 'kodicmd {SSM:##}> '
     prompt_template = 'kodicmd> '
     current_line = ''
-
+    ph = JSONRPC()
     # do nothing on an empty line
     emptyline = lambda self: None
 
@@ -69,6 +69,8 @@ class KodiShell(Cmd):
         self.session = ''
         self.current_user = ''
         self.server = ''
+        self.host = ''
+        self.port = ''
         self.ssm = {}
         self.config = {}
 

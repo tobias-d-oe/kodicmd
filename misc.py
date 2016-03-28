@@ -77,14 +77,6 @@ SEPARATOR = '\n' + '#' * 30 + '\n'
 
 
 
-ph = JSONRPC()
-
-
-
-
-
-
-
 
 
 def help_clear(self):
@@ -142,7 +134,7 @@ def help_whoamitalkingto(self):
 
 
 def do_whoamitalkingto(self, args):
-    print "%s:%s" % (ph.host,ph.port)
+    print "%s:%s" % (self.ph.host,self.ph.port)
 
 ####################
 
@@ -235,7 +227,7 @@ def replace_line_buffer(self, msg=None):
 
 
 def load_config_section(self, section):
-    config_opts = ['server', 'username', 'password', 'nossl']
+    config_opts = ['host','port']
 
     if not self.config_parser.has_section(section):
         logging.debug('Configuration section [%s] does not exist', section)
@@ -248,11 +240,19 @@ def load_config_section(self, section):
         if self.options.__dict__[key]:
             # set the config value to the command-line argument
             self.config[key] = self.options.__dict__[key]
+            if key == 'host':
+                self.ph.host = self.config[key]
+            if key == 'port':
+                self.ph.port = self.config[key]
         else:
             try:
                 self.config[key] = self.config_parser.get(section, key)
             except NoOptionError:
                 pass
+    if str(self.config['host']) != "":
+        self.ph.host = self.config['host']
+    if str(self.config['port']) != "":
+        self.ph.port = self.config['port']
 
     # handle the nossl boolean
     if self.config.has_key('nossl') and isinstance(self.config['nossl'], str):

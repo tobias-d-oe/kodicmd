@@ -48,14 +48,10 @@ if __name__ == '__main__':
         sys.stdout = codecs.getwriter(locale.getpreferredencoding())(sys.stdout)
 
     optionsTable = [
-        Option('-u', '--username', action='store',
-               help='use this username to connect to the server'),
-        Option('-p', '--password', action='store',
-               help='use this password to connect to the server'),
-        Option('-s', '--server', action='store',
-               help='connect to this server [default: localhost]'),
-        Option('--nossl', action='store_true',
-               help='use HTTP instead of HTTPS'),
+        Option('-p', '--port', action='store',
+               help='kodi http port'),
+        Option('-H', '--host', action='store',
+               help='host to connect'),
         Option('--nohistory', action='store_true',
                help='do not store command history'),
         Option('-y', '--yes', action='store_true',
@@ -100,11 +96,17 @@ if __name__ == '__main__':
     # create an instance of the shell
     shell = KodiShell(options, conf_dir, config)
 
-    # set the default server to localhost
-    if shell.options.server:
-        shell.config['server'] = shell.options.server
+    if shell.options.host:
+        shell.config['host'] = shell.options.host
+        shell.ph.host = shell.options.host
     else:
-        shell.config['server'] = 'localhost'
+        shell.config['host'] = 'localhost'
+
+    if shell.options.port:
+        shell.config['port'] = shell.options.port
+        shell.ph.port = shell.options.port
+    else:
+        shell.config['port'] = '80'
 
     # create an empty configuration file if one's not present
     if not os.path.isfile(user_conf_file):
@@ -130,6 +132,8 @@ if __name__ == '__main__':
 
     # load the default configuration section
     shell.load_config_section('kodicmd')
+
+
 
     # run a single command from the command line
     if len(args):
