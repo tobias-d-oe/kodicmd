@@ -119,4 +119,18 @@ def complete_movie_setdetail(self, text, line, beg, end):
         return tab_completer(['trailer','top250','runtime','playcount','sorttitle','cast','country','originaltitle','movieid','dateadded','title','rating','tagline','file','setid','plot','votes','fanart','mpaa','streamdetails','writer','thumbnail','resume','director','imdbnumber','studio','genre'], text)
 
 
+####################
+
+
+def help_movie_listgenre(self):
+    print 'movies_listgenre: List your movie genres'
+    print 'usage: movies_listgenre'
+
+
+def do_movie_listgenre(self, args):
+    (args, _options) = parse_arguments(args)
+    gen = self.ph.LibraryGetMovieGenre()
+    for m in gen:
+        print m
+
 

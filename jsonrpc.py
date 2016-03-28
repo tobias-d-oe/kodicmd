@@ -18,7 +18,7 @@ class JSONRPC():
         headers = {'Content-Type':'application/json'}
     
         data = json.dumps(values)
-    
+        #print data 
         req = urllib2.Request(url, data, headers)
     
         response = urllib2.urlopen(req)
@@ -83,6 +83,15 @@ class JSONRPC():
         for mov in json_obj['result']['movies']:
             res.append('%s' % (mov['label'].encode('utf-8')))
         return res
+
+    def LibraryGetMovieGenre(self):
+        res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetGenres', { 'type':'movie' })
+        json_obj = json.loads(res)
+        res = []
+        for gen in json_obj['result']['genres']:
+            res.append('%s' % (gen['label'].encode('utf-8')))
+        return res
+
 
     def Movie2ID(self,movie):
         res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovies', { 'sort': { 'order': 'ascending', 'method': 'label', 'ignorearticle': True } }, id='libMovies')
