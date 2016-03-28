@@ -134,7 +134,12 @@ def help_whoamitalkingto(self):
 
 
 def do_whoamitalkingto(self, args):
-    print "%s:%s" % (self.ph.host,self.ph.port)
+    try:
+        res = self.ph.GetName()
+        res2 = json.loads(res)
+        print "%s @ %s:%s" % (res2['result']['name'],self.ph.host,self.ph.port)
+    except:
+        print "Nobody! There is no connection to kodi"
 
 ####################
 
