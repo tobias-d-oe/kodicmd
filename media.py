@@ -28,7 +28,7 @@ def complete_media_sourceslist(self, text, line, beg, end):
 ####################
 
 def help_media_scanvideosources(self):
-    print 'media_scanvideosources: Scan given folder for new content for videolibrary'
+    print 'media_scanvideosources: Exports videolibrary to a folder'
     print 'usage: media_scanvideosources /home/osmc/Media/Movies'
 
 
@@ -37,4 +37,15 @@ def do_media_scanvideosources(self, args):
     res = self.ph.VideoLibraryScan(args[0])
     print res
 
+####################
+
+def help_media_exportvideolibrary(self):
+    print 'media_exportvideolibrary: Scan given folder for new content for videolibrary'
+    print 'usage: media_exportvideolibrary /tmp/export'
+
+
+def do_media_exportvideolibrary(self, args):
+    (args, _options) = parse_arguments(args)
+    res = self.ph.VideoLibraryExport(args[0])
+    print res
 

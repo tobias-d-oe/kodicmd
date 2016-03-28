@@ -260,6 +260,11 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'VideoLibrary.Scan',{ 'directory': '%s' % (path) }  )
         return res
 
+    def VideoLibraryExport(self,path="/tmp"):
+        res = self.getJsonResponse(self.host, self.port,'VideoLibrary.Export',{ 'options':{"path": '%s' % (path)} }  )
+        return res
+
+
     def RC(self,rc):
         res = self.getJsonResponse(self.host, self.port,'Input.ExecuteAction',{ 'action': '%s' % (rc) }  )
         return res
