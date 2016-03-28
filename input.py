@@ -1,4 +1,16 @@
 from utils import *
+####################
+
+def help_rc_text(self):
+    print 'help_rc_text: remotecontrol kodi'
+    print 'usage: rc_text "My Text"'
+
+def do_rc_text(self, args):
+    #(args, _options) = parse_arguments(args)
+    res = self.ph.RC_text(args)
+    print res
+
+
 
 ####################
 

@@ -264,6 +264,22 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'Input.ExecuteAction',{ 'action': '%s' % (rc) }  )
         return res
    
+    def RC_text(self,text):
+        res = self.getJsonResponse(self.host, self.port,'Input.SendText',{ 'text': '%s' % (text) }  )
+        return res
+   
     def ListSources(self,src):
         res = self.getJsonResponse(self.host, self.port,'Files.GetSources',{'media':'%s' % (src)})
         return res
+
+    def GUIActivateWindow(self,winid):
+        res = self.getJsonResponse(self.host, self.port,'GUI.ActivateWindow',{'window':'%s' % (winid)})
+        return res
+
+    def GUIGetProperty(self,prop):
+        p=[]
+        p.append(prop)
+        res = self.getJsonResponse(self.host, self.port,'GUI.GetProperties',{'properties':p})
+        return res
+
+
