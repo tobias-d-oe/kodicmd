@@ -11,8 +11,6 @@ def help_movie_list(self):
 
 def do_movie_list(self, args):
     (args, _options) = parse_arguments(args)
-    print "Movies:"
-    print"--------"
     mov = self.ph.LibraryGetMovies()
     for m in mov:
         print m
