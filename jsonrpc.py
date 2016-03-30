@@ -1,5 +1,6 @@
 import json
 import urllib2
+import re
 
 
 class JSONRPC():
@@ -21,9 +22,17 @@ class JSONRPC():
         data = json.dumps(values)
         #print data 
         req = urllib2.Request(url, data, headers)
-    
         response = urllib2.urlopen(req)
-        return response.read()
+###
+        if "content-type" in response.headers and "charset=" in response.headers['content-type']:
+            encoding=response.headers['content-type'].split('charset=')[-1]
+            content = unicode(response.read(), encoding)
+        else:
+            content = unicode(response.read(), "utf-8")
+###
+        #print content
+        return content
+    
 
     def Init(self, host, port):
         self.host = host
@@ -104,7 +113,6 @@ class JSONRPC():
         return res
 
 
-#{"jsonrpc": "2.0", "id": 1, "method": "VideoLibrary.SetMovieDetails", "params": {"movieid" : XBMCMOVIEIDINTEGER, "tag":["YOURTAGHERE"]}}
     def MovieSetDetail(self,movie,key,value):
         va=[]
         print "%s - %s - %s" % (movie,key,value)
@@ -171,8 +179,6 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'JSONRPC.Version',)
         res = json.loads(res)
         return res['result']['version']
-        #resstr = "%s.%s.%s" % (res['result']['version']['major'],res['result']['version']['minor'],res['result']['version']['patch']
-        #return resstr
 
     def SystemGetKernel(self):
         #res = self.getJsonResponse(self.host, self.port,'XBMC.GetInfoLabels","params":{"labels":["System.KernelVersion","System.BuildVersion"]}}
@@ -307,6 +313,55 @@ class JSONRPC():
         p=[]
         p.append(prop)
         res = self.getJsonResponse(self.host, self.port,'GUI.GetProperties',{'properties':p})
+        return res
+
+    def GetSettings(self):
+        res = self.getJsonResponse(self.host, self.port,'Settings.GetSettings',  )
+        res2 = json.loads(res)
+        out = []
+        for res in res2['result']['settings']:
+             out.append(res)
+        return out
+
+
+    def GetSettingsList(self):
+        res = self.getJsonResponse(self.host, self.port,'Settings.GetSettings',  )
+        res2 = json.loads(res)
+        out = []
+        for res in res2['result']['settings']:
+             out.append(res['id'])
+        return out
+
+    def GetSSetting(self,set):
+        res = self.getJsonResponse(self.host, self.port,'Settings.GetSettingValue', { 'setting': '%s' % (set) })
+        res2 = json.loads(res)
+        return res2['result']['value']
+
+    def SetSetting(self,set,val):
+        x = "0123456789"
+        match = re.search("^\d+$", x)
+        try: 
+            x = match.group(0)
+            is_int = True
+        except AttributeError:
+            is_int = False
+
+        if val not in ['true','false'] and not is_int:
+            res = self.getJsonResponse(self.host, self.port,'Settings.SetSettingValue', { 'setting': '%s' % (set), 'value': '%s' % (val) })
+        else:
+            if val == "true":
+                val = True
+            elif val == "false":
+                val = False
+            elif is_int:
+                val = int(val)
+            else:
+                print "Problem"
+            res = self.getJsonResponse(self.host, self.port,'Settings.SetSettingValue', { 'setting': '%s' % (set), 'value': val })
+        return res
+
+    def ResetSetting(self,set):
+        res = self.getJsonResponse(self.host, self.port,'Settings.ResetSettingValue', { 'setting': '%s' % (set) })
         return res
 
 
