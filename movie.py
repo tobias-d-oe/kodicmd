@@ -44,10 +44,9 @@ def do_movie_play(self, args):
 
 
 def complete_movie_play(self, text, line, beg, end):
-    parts = line.split(' ')
-    if len(parts) >= 2:
-       
-        return tab_completer(self.ph.LibraryGetMovies(), text)
+    mline = line.partition(' ')[2]
+    offs = len(mline) - len(text)
+    return [s[offs:] for s in self.ph.LibraryGetMovies() if s.startswith(mline)]
 
 ####################
 
@@ -93,10 +92,10 @@ def do_movie_getdetails(self, args):
     
 
 def complete_movie_getdetails(self, text, line, beg, end):
-    parts = line.split(' ')
+    mline = line.partition(' ')[2]
+    offs = len(mline) - len(text)
+    return [s[offs:] for s in self.ph.LibraryGetMovies() if s.startswith(mline)]
 
-    if len(parts) == 2:
-        return tab_completer(self.ph.LibraryGetMovies(), text)
 
 ####################
 
