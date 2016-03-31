@@ -45,8 +45,7 @@ from difflib import unified_diff
 from tempfile import mkstemp
 from textwrap import wrap
 import rpm
-#from spacecmd.optionparser import KodicmdOptionParser
-from optionparser import KodicmdOptionParser
+from kodicmd.optionparser import KodicmdOptionParser
 
 try:
     import json

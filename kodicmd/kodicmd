@@ -91,7 +91,7 @@ if __name__ == '__main__':
         os.environ['TERM'] = 'dumb'
 
     # import our Cmd subclass after we settle our TERM value
-    from shell import KodiShell
+    from kodicmd.shell import KodiShell
 
     # create an instance of the shell
     shell = KodiShell(options, conf_dir, config)
