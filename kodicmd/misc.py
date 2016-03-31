@@ -15,8 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
-# Copyright 2013 Aron Parsons <aronparsons@gmail.com>
-# Copyright (c) 2011--2015 Red Hat, Inc.
 #
 
 # NOTE: the 'self' variable is an instance of KodiShell
@@ -36,48 +34,15 @@ import shlex
 from getpass import getpass
 from ConfigParser import NoOptionError
 #from spacecmd.utils import *
-from utils import *
+from kodi.utils import *
 from time import sleep
 import xmlrpclib
 
 from jsonrpc import JSONRPC
 
-# list of system selection options for the help output
-HELP_SYSTEM_OPTS = '''<SYSTEMS> can be any of the following:
-name
-ssm (see 'help ssm')
-search:QUERY (see 'help system_search')
-group:GROUP
-channel:CHANNEL
-'''
-
-HELP_TIME_OPTS = '''Dates can be any of the following:
-Explicit Dates:
-Dates can be expressed as explicit date strings in the YYYYMMDD[HHMM]
-format.  The year, month and day are required, while the hours and
-minutes are not; the hours and minutes will default to 0000 if no
-values are provided.
-
-Deltas:
-Dates can be expressed as delta values.  For example, '2h' would
-mean 2 hours in the future.  You can also use negative values to
-express times in the past (e.g., -7d would be one week ago).
-
-Units:
-s -> seconds
-m -> minutes
-h -> hours
-d -> days
-'''
-
 SEPARATOR = '\n' + '#' * 30 + '\n'
 
-
-
-
-
-
-
+####################
 
 def help_clear(self):
     print 'clear: clear the screen'
@@ -89,16 +54,11 @@ def do_clear(self, args):
 
 ####################
 
-
-
-
-
 def help_help(self):
     print 'help: Show help for the given command'
     print 'usage: help COMMAND'
 
 ####################
-
 
 def help_history(self):
     print 'history: List your command history'
@@ -110,7 +70,6 @@ def do_history(self, args):
         print '%s  %s' % (str(i).rjust(4), readline.get_history_item(i))
 
 ####################
-
 
 def help_toggle_confirmations(self):
     print 'toggle_confirmations: Toggle confirmation messages on/off'
@@ -124,7 +83,6 @@ def do_toggle_confirmations(self, args):
     else:
         self.options.yes = True
         logging.warning('Confirmation messages are DISABLED!')
-
 
 ####################
 

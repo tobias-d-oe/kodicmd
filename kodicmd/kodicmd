@@ -16,10 +16,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
-# Copyright 2013 Aron Parsons <aronparsons@gmail.com>
+# Copyright 2016 Tobias D. Oestreicher <lists@oestreicher.com.de>
+#
+# Script based on spacecmd written by Aron Parsons
 #
 
-""" spacecmd - a command line interface to Spacewalk """
+""" kodiecmd - a command line interface to Kodi """
 
 import logging
 import os

@@ -15,11 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
-# Copyright 2013 Aron Parsons <aronparsons@gmail.com>
-# Copyright (c) 2011--2015 Red Hat, Inc.
-#
 
-# NOTE: the 'self' variable is an instance of SpacewalkShell
+# NOTE: the 'self' variable is an instance of KodiShell
 
 # wildcard import
 # pylint: disable=W0401,W0614
