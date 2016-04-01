@@ -34,7 +34,7 @@ import shlex
 from getpass import getpass
 from ConfigParser import NoOptionError
 #from spacecmd.utils import *
-from kodi.utils import *
+from kodicmd.utils import *
 from time import sleep
 import xmlrpclib
 
