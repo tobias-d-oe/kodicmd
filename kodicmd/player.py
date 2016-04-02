@@ -182,3 +182,59 @@ def complete_player_getproperty(self, text, line, beg, end):
 
 ####################
 
+####################
+def help_player_goto(self):
+    print 'player_goto: play next/previous/specific item'
+    print 'usage: player_goto <playerid> <where>'
+
+def do_player_goto(self,args):
+    (args, _options) = parse_arguments(args)
+
+    pl = args[0]
+    if pl == 'audio':
+        plid = 0
+    elif pl == 'video':
+        plid = 1
+    elif pl == 'picture':
+        plid = 2
+    res = self.ph.PlayerGoTo(plid,args[1])
+    print res
+
+def complete_player_goto(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(['audio','video','picture'], text)
+
+    if len(parts) == 3:
+        return tab_completer(['next','previous'], text)
+
+####################
+####################
+def help_player_move(self):
+    print 'player_move: toggle play/pause at given player'
+    print 'usage: player_move <playerid>'
+
+def do_player_move(self,args):
+    (args, _options) = parse_arguments(args)
+
+    pl = args[0]
+    if pl == 'audio':
+        plid = 0
+    elif pl == 'video':
+        plid = 1
+    elif pl == 'picture':
+        plid = 2
+
+    res = self.ph.PlayerMove(plid,args[1])
+    print res
+
+def complete_player_move(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(['audio','video','picture'], text)
+
+    if len(parts) == 3:
+        return tab_completer(['left','right','up', 'down', 'next', 'skip', 'previous'], text)
+

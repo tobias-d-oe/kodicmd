@@ -48,7 +48,20 @@ class JSONRPC():
         #self.Prepare()
         res = self.getJsonResponse(self.host, self.port,'Player.Open', { 'item':{'file':'%s' % media} })
         return res
-        
+
+    def PlayerGoTo(self,playerid,where):
+        if where != "next" and where != "previous":
+            res = self.getJsonResponse(self.host, self.port,'Player.GoTo', { 'playerid': int(playerid), 'to': int(where)})
+        else:
+            res = self.getJsonResponse(self.host, self.port,'Player.GoTo', { 'playerid': int(playerid), 'to': '%s' % (where)})
+        return res
+
+    def PlayerMove(self,playerid,where):
+        res = self.getJsonResponse(self.host, self.port,'Player.Move', { 'playerid': int(playerid), 'direction': '%s' % (where)})
+        return res
+
+
+
     def PlaylistClear(self,num):
         res = self.getJsonResponse(self.host, self.port,'Playlist.Clear' , { 'playlistid' : num } )
         return res
