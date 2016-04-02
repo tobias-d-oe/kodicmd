@@ -20,7 +20,7 @@ class JSONRPC():
         headers = {'Content-Type':'application/json'}
     
         data = json.dumps(values)
-        #print data 
+#        print data 
         req = urllib2.Request(url, data, headers)
         response = urllib2.urlopen(req)
 ###
@@ -30,7 +30,7 @@ class JSONRPC():
         else:
             content = unicode(response.read(), "utf-8")
 ###
-        #print content
+#        print content
         return content
     
 
@@ -60,6 +60,14 @@ class JSONRPC():
     def PlayPlaylist(self, id):
         res = self.getJsonResponse(self.host, self.port,'Player.Open', { 'item':{'playlistid':'%s' % id} })
         return res
+
+    def PlayerGetProperty(self, playerid, prop):
+        p = []
+        p.append(prop)
+        res = self.getJsonResponse(self.host, self.port,'Player.GetProperties', { 'properties': p, 'playerid': int(playerid)} )
+        return res
+
+
 
     def GetVolume(self):
         res = self.getJsonResponse(self.host, self.port,'Application.GetProperties', { 'properties': ['volume'] })
@@ -363,5 +371,14 @@ class JSONRPC():
     def ResetSetting(self,set):
         res = self.getJsonResponse(self.host, self.port,'Settings.ResetSettingValue', { 'setting': '%s' % (set) })
         return res
+
+
+    def WhatPlays(self,playerid):
+        if playerid == 1:
+            res = self.getJsonResponse(self.host, self.port,'Player.GetItem', { 'properties': ["title", "album", "artist", "season", "episode", "duration", "showtitle", "tvshowid", "thumbnail", "file", "fanart", "streamdetails"], 'playerid': int(playerid) })
+        elif playerid == 0:
+            res = self.getJsonResponse(self.host, self.port,'Player.GetItem', { 'properties': ["title", "album", "artist", "duration", "thumbnail", "file", "fanart", "streamdetails"], 'playerid': int(playerid) })
+        res2 = json.loads(res)
+        return res2['result']['item']
 
 

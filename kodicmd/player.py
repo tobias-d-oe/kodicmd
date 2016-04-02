@@ -73,4 +73,112 @@ def complete_player_stop(self, text, line, beg, end):
 
 
 ####################
+####################
+def help_player_whatplays(self):
+    print 'player_whatplays: show current playing item'
+    print 'usage: player_whatplays <playerid>'
+
+def do_player_whatplays(self,args):
+    (args, _options) = parse_arguments(args)
+
+    pl = args.pop(0)
+    if pl == 'audio':
+        plid = 0
+    elif pl == 'video':
+        plid = 1
+    elif pl == 'picture':
+        plid = 2
+
+    res = self.ph.WhatPlays(plid)
+    if plid==0:
+        print "Album        : %s" % (res['album'])
+        print "Artist       : %s" % (res['artist'])
+        print "Fanart       : %s" % (res['fanart'])
+        print "Titel        : %s" % (res['title'])
+        print "Label        : %s" % (res['label'])
+        print "Thumbnail    : %s" % (res['thumbnail'])
+        print "File         : %s" % (res['file'])
+        print "Duration     : %s" % (res['duration'])
+        print "Type         : %s" % (res['type'])
+        print "ID           : %s" % (res['id'])
+    elif plid==1:
+        print "Title        : %s" % (res['title'])
+        print "Label        : %s" % (res['label'])
+        print "Type         : %s" % (res['type'])
+        #print "Season       : %s" % (res['season'])
+        #print "Episode      : %s" % (res['episode'])
+        #print "Duration     : %s" % (res['duration'])
+        #print "Showtitle    : %s" % (res['showtitle'])
+        print "ID           : %s" % (res['id'])
+        print "Thumbnail    : %s" % (res['thumbnail'])
+        #print "File         : %s" % (res['file'])
+        print "Fanart       : %s" % (res['fanart'])
+        #print "Streamdetails: %s" % (res['streamdetails'])
+
+    
+def complete_player_whatplays(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(['audio','video','picture'], text)
+
+####################
+
+####################
+def help_player_getproperty(self):
+    print 'player_getproperty: stop the given player'
+    print 'usage: player_getproperty <playerid> <property>'
+
+def do_player_getproperty(self,args):
+    (args, _options) = parse_arguments(args)
+    pl = args[0]
+    if pl == 'audio':
+        plid = 0
+    elif pl == 'video':
+        plid = 1
+    elif pl == 'picture':
+        plid = 2
+
+    prop = args[1]
+
+    res = self.ph.PlayerGetProperty(plid,prop)
+    res = json.loads(res)
+    res = res['result'][prop]
+
+    print res
+
+def complete_player_getproperty(self, text, line, beg, end):
+    parts = line.split(' ')
+
+    if len(parts) == 2:
+        return tab_completer(['audio','video','picture'], text)
+    if len(parts) == 3:
+        return tab_completer([
+                              'type',
+                              'partymode',
+                              'speed',
+                              'time',
+                              'percentage',
+                              'totaltime',
+                              'playlistid',
+                              'position',
+                              'repeat',
+                              'shuffled',
+                              'canseek',
+                              'canchangespeed',
+                              'canmove',
+                              'canzoom',
+                              'canrotate',
+                              'canshuffle',
+                              'canrepeat',
+                              'currentaudiostream',
+                              'audiostreams',
+                              'subtitleenabled',
+                              'currentsubtitle',
+                              'subtitles',
+                              'live'
+                            ], text)
+                          
+
+####################
 
