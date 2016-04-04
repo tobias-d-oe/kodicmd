@@ -181,6 +181,17 @@ def do_system_mutetoggle(self, args):
         self.ph.SystemMuteToggle(False)
     else:
         self.ph.SystemMuteToggle(True)
+####################
+
+def help_system_eject(self):
+    print 'system_eject: eject optical drive'
+    print 'usage: system_eject'
+
+
+def do_system_eject(self, args):
+    res = self.ph.SystemEjectOpticalDrive()
+    print self.result_beautifier(res)
+
 
 ####################
 
@@ -190,8 +201,52 @@ def help_system_quit(self):
 
 
 def do_system_quit(self, args):
-    print self.ph.SystemQuit()
+    res = self.ph.SystemQuit()
+    print self.result_beautifier(res)
 
+####################
+
+def help_system_hibernate(self):
+    print 'system_hibernate: hibernate system'
+    print 'usage: system_hibernate'
+
+
+def do_system_hibernate(self, args):
+    res = self.ph.SystemHibernate()
+    print self.result_beautifier(res)
+
+####################
+
+def help_system_reboot(self):
+    print 'system_reboot: reboot system'
+    print 'usage: system_reboot'
+
+
+def do_system_reboot(self, args):
+    res = self.ph.SystemReboot()
+    print self.result_beautifier(res)
+
+####################
+
+def help_system_shutdown(self):
+    print 'system_shutdown: shutdown system'
+    print 'usage: system_shutdown'
+    
+
+def do_system_shutdown(self, args):
+    res = self.ph.SystemShutdown()
+    print self.result_beautifier(res)
+
+####################
+
+def help_system_suspend(self):
+    print 'system_suspend: suspend system'
+    print 'usage: system_suspend'
+
+
+def do_system_suspend(self, args):
+    res = self.ph.SystemSuspend()
+    print self.result_beautifier(res)
 
 ####################
 

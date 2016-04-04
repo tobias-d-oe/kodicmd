@@ -220,8 +220,27 @@ class JSONRPC():
 
     def SystemQuit(self):
         res = self.getJsonResponse(self.host, self.port,'Application.Quit', )
-        res = json.loads(res)
-        return res['result']['muted']
+        return res
+
+    def SystemHibernate(self):
+        res = self.getJsonResponse(self.host, self.port,'System.Hibernate', )
+        return res
+
+    def SystemReboot(self):
+        res = self.getJsonResponse(self.host, self.port,'System.Reboot', )
+        return res
+
+    def SystemShutdown(self):
+        res = self.getJsonResponse(self.host, self.port,'System.Shutdown', )
+        return res
+
+    def SystemSuspend(self):
+        res = self.getJsonResponse(self.host, self.port,'System.Suspend', )
+        return res
+
+    def SystemEjectOpticalDrive(self):
+        res = self.getJsonResponse(self.host, self.port,'System.EjectOpticalDrive', )
+        return res
 
     def SystemPing(self):
         res = self.getJsonResponse(self.host, self.port,'JSONRPC.Ping', )
