@@ -8,7 +8,7 @@ def help_rc_text(self):
 def do_rc_text(self, args):
     #(args, _options) = parse_arguments(args)
     res = self.ph.RC_text(args)
-    print res
+    print self.result_beautifier(res)
 
 
 
@@ -21,7 +21,7 @@ def help_rc(self):
 def do_rc(self, args):
     (args, _options) = parse_arguments(args)
     res = self.ph.RC(args[0])
-    print res
+    print self.result_beautifier(res)
 
 def complete_rc(self, text, line, beg, end):
     parts = line.split(' ')
