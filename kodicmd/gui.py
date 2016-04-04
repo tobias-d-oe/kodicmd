@@ -35,7 +35,8 @@ def help_gui_activatewindow(self):
 def do_gui_activatewindow(self, args):
     (args, _options) = parse_arguments(args)
     res = self.ph.GUIActivateWindow(args.pop(0))
-    return res
+    print self.result_beautifier(res)
+
 
 def complete_gui_activatewindow(self, text, line, beg, end):
     parts = line.split(' ')

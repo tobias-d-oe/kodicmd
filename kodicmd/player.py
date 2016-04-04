@@ -38,7 +38,7 @@ def do_player_playpause(self,args):
         plid = 2
 
     res = self.ph.PlayerPlayPause(plid)
-    print "Play/Pause toggled for %s player (%s)" % (pl,plid)
+    print self.result_beautifier(res)
 
 def complete_player_playpause(self, text, line, beg, end):
     parts = line.split(' ')
@@ -63,7 +63,7 @@ def do_player_stop(self,args):
         plid = 2
 
     res = self.ph.PlayerStop(plid)
-    print "Stop %s player (%s)" % (pl,plid)
+    print self.result_beautifier(res)
 
 def complete_player_stop(self, text, line, beg, end):
     parts = line.split(' ')
@@ -90,6 +90,7 @@ def do_player_whatplays(self,args):
         plid = 2
 
     res = self.ph.WhatPlays(plid)
+
     if plid==0:
         print "Album        : %s" % (res['album'])
         print "Artist       : %s" % (res['artist'])
@@ -198,7 +199,7 @@ def do_player_goto(self,args):
     elif pl == 'picture':
         plid = 2
     res = self.ph.PlayerGoTo(plid,args[1])
-    print res
+    print self.result_beautifier(res)
 
 def complete_player_goto(self, text, line, beg, end):
     parts = line.split(' ')
@@ -227,7 +228,7 @@ def do_player_move(self,args):
         plid = 2
 
     res = self.ph.PlayerMove(plid,args[1])
-    print res
+    print self.result_beautifier(res)
 
 def complete_player_move(self, text, line, beg, end):
     parts = line.split(' ')

@@ -1,7 +1,7 @@
 import json
 import urllib2
 import re
-
+from utils import *
 
 class JSONRPC():
     def __init__(self):
@@ -20,17 +20,17 @@ class JSONRPC():
         headers = {'Content-Type':'application/json'}
     
         data = json.dumps(values)
-#        print data 
+        logging.debug("API Querry: %s" % (data))
         req = urllib2.Request(url, data, headers)
         response = urllib2.urlopen(req)
-###
+
         if "content-type" in response.headers and "charset=" in response.headers['content-type']:
             encoding=response.headers['content-type'].split('charset=')[-1]
             content = unicode(response.read(), encoding)
         else:
             content = unicode(response.read(), "utf-8")
-###
-#        print content
+
+        logging.debug('API Result: %s' % (content))
         return content
     
 
@@ -105,6 +105,7 @@ class JSONRPC():
    
     def PlayerPlayPause(self,pl):
         res = self.getJsonResponse(self.host, self.port,'Player.PlayPause',{ 'playerid': pl } )
+        return res
 
     def LibraryGetMovies(self):
         res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovies', { 'sort': { 'order': 'ascending', 'method': 'label', 'ignorearticle': True } }, id='libMovies')
@@ -140,17 +141,16 @@ class JSONRPC():
         movieid = self.Movie2ID(movie)
         va.append(value)
         res = self.getJsonResponse(self.host, self.port,'VideoLibrary.SetMovieDetails', {'movieid' : int(movieid), '%s' % (key): value})
-        print "2"
-        print res
+        return res
 
 
     def PlayerOpen(self,movieid):
         res = self.getJsonResponse(self.host, self.port,'Player.Open', {"item":{"movieid": movieid }})
-
+        return res
 
     def PlayerStop(self,id):
         res = self.getJsonResponse(self.host, self.port,'Player.Stop', {'playerid': id })
-
+        return res
 
 
 

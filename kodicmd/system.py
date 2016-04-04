@@ -53,7 +53,7 @@ def do_system_setvolume(self, args):
     (args, _options) = parse_arguments(args)
     pl = args.pop(0)
     res = self.ph.SystemSetVolume(pl)
-
+    print self.result_beautifier(res)
 
 ####################
 

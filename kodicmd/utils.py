@@ -42,6 +42,7 @@ from difflib import unified_diff
 from tempfile import mkstemp
 from textwrap import wrap
 import rpm
+import json
 from kodicmd.optionparser import KodicmdOptionParser
 
 try:
@@ -528,3 +529,12 @@ def file_needs_b64_enc(self, contents):
         import string
         translate_table = string.maketrans("", "")
         return float(len(contents.translate(translate_table, text_characters))) / len(contents) > 0.3
+
+
+
+def result_beautifier(self, json_result):
+    res = json.loads(json_result)
+    if 'result' in res:
+        return res['result'] # and res['result'] == 'OK':
+    else:
+        return "ERROR: Sorry, something went wrong.... :-("
