@@ -24,10 +24,13 @@ def do_player_getactiveplayer(self,args):
 ####################
 def help_player_playpause(self):
     print 'player_playpause: toggle play/pause at given player'
-    print 'usage: player_playpause <playerid>'
+    print 'usage: player_playpause PLAYER'
 
 def do_player_playpause(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=1:
+        self.help_player_playpause()
+        return
 
     pl = args.pop(0)
     if pl == 'audio':
@@ -49,10 +52,13 @@ def complete_player_playpause(self, text, line, beg, end):
 ####################
 def help_player_stop(self):
     print 'player_stop: stop the given player'
-    print 'usage: player_stop <playerid>'
+    print 'usage: player_stop PLAYER'
 
 def do_player_stop(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=1:
+        self.help_player_stop()
+        return
 
     pl = args.pop(0)
     if pl == 'audio':
@@ -76,10 +82,13 @@ def complete_player_stop(self, text, line, beg, end):
 ####################
 def help_player_whatplays(self):
     print 'player_whatplays: show current playing item'
-    print 'usage: player_whatplays <playerid>'
+    print 'usage: player_whatplays PLAYER'
 
 def do_player_whatplays(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=1:
+        self.help_player_whatplays()
+        return
 
     pl = args.pop(0)
     if pl == 'audio':
@@ -132,6 +141,10 @@ def help_player_getproperty(self):
 
 def do_player_getproperty(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=2:
+        self.help_player_getproperty()
+        return
+
     pl = args[0]
     if pl == 'audio':
         plid = 0
@@ -190,6 +203,9 @@ def help_player_goto(self):
 
 def do_player_goto(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=2:
+        self.help_player_goto()
+        return
 
     pl = args[0]
     if pl == 'audio':
@@ -218,6 +234,9 @@ def help_player_move(self):
 
 def do_player_move(self,args):
     (args, _options) = parse_arguments(args)
+    if len(args)!=2:
+        self.help_player_move()
+        return
 
     pl = args[0]
     if pl == 'audio':

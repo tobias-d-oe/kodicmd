@@ -6,10 +6,14 @@ from utils import *
 
 def help_pvr_getchannelgroups(self):
     print 'pvr_getchannelgroups: List Channel Groups'
-    print 'usage: pvr_getchannelgroups'
+    print 'usage: pvr_getchannelgroups TYPE'
 
 
 def do_pvr_getchannelgroups(self, args):
+    (argsarray, _options) = parse_arguments(args)
+    if len(argsarray)!=1:
+        self.help_pvr_getchannelgroups()
+        return
     gen = self.ph.PVRGetChannelGroups(args)
     for m in gen:
         print m 
@@ -25,11 +29,14 @@ def complete_pvr_getchannelgroups(self, text, line, beg, end):
 
 def help_pvr_getchannelgroupdetails(self):
     print 'pvr_getchannelgroupdetails: Show Details of given Channel Group'
-    print 'usage: pvr_getchannelgroupdetails'
+    print 'usage: pvr_getchannelgroupdetails TYPE CHANNELGROUPNAME'
 
 
 def do_pvr_getchannelgroupdetails(self, args):
     (args, _options) = parse_arguments(args)
+    if len(args)<=2:
+        self.help_pvr_getchannelgroupdetails()
+        return
     group_type = args.pop(0)
     group_name = ' '.join(args)
     gen = self.ph.PVRGetChannelGroupDetails(group_type,group_name)
