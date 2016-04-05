@@ -414,3 +414,31 @@ class JSONRPC():
         return res2['result']['item']
 
 
+
+    def PVRGetChannelGroups(self,channeltype='tv'):
+        res = self.getJsonResponse(self.host, self.port,'PVR.GetChannelGroups', { 'channeltype':'%s' % (channeltype) })
+        json_obj = json.loads(res)
+        res = []
+        for chan in json_obj['result']['channelgroups']:
+            cl = chan['label'].encode('utf-8') #.encode('cp1252')
+            res.append(cl)
+        return res
+
+    def PVRGetChannelGroupIDByName(self,channeltype,channelgroupname):
+        res = self.getJsonResponse(self.host, self.port,'PVR.GetChannelGroups', { 'channeltype':'%s' % (channeltype) })
+        json_obj = json.loads(res)
+        res = []
+        for chan in json_obj['result']['channelgroups']:
+            
+            A = str(chan['label'].encode('utf-8'))
+            B = str(channelgroupname)
+            if A == B:
+                return chan['channelgroupid']
+
+    def PVRGetChannelGroupDetails(self,channeltype,groupname):
+        channelgroupid = self.PVRGetChannelGroupIDByName(channeltype,groupname)
+        res = self.getJsonResponse(self.host, self.port,'PVR.GetChannelGroupDetails', { 'channelgroupid': int(channelgroupid) })
+        json_obj = json.loads(res)
+        res = json_obj['result']['channelgroupdetails']['channels']
+        return res
+
