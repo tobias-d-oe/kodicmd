@@ -5,15 +5,20 @@ from utils import *
 
 
 def help_movie_list(self):
-    print 'movies_list: List your movies'
-    print 'usage: movies_list'
+    print 'movies_list: List movie collection'
+    print 'usage: movies_list [GENRE]'
 
 
 def do_movie_list(self, args):
-    (args, _options) = parse_arguments(args)
-    mov = self.ph.LibraryGetMovies()
+    mov = self.ph.LibraryGetMovies(args)
     for m in mov:
         print m
+
+def complete_movie_list(self, text, line, beg, end):
+    parts = line.split(' ')
+    if len(parts) == 2:
+        return tab_completer(self.ph.LibraryGetMovieGenre(), text)
+
 
 ####################
 

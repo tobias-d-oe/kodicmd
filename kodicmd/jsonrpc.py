@@ -107,8 +107,11 @@ class JSONRPC():
         res = self.getJsonResponse(self.host, self.port,'Player.PlayPause',{ 'playerid': pl } )
         return res
 
-    def LibraryGetMovies(self):
-        res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovies', { 'sort': { 'order': 'ascending', 'method': 'label', 'ignorearticle': True } }, id='libMovies')
+    def LibraryGetMovies(self,genre=''):
+        if genre == '':
+            res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovies', { 'sort': { 'order': 'ascending', 'method': 'label', 'ignorearticle': True } }, id='libMovies')
+        else:
+            res = self.getJsonResponse(self.host, self.port,'VideoLibrary.GetMovies', { 'filter': {'field': 'genre', 'operator': 'is', 'value': '%s' % (genre)}, 'sort': { 'order': 'ascending', 'method': 'label', 'ignorearticle': True } }, id='libMovies')
         json_obj = json.loads(res)
         res = []
         #print len(json_obj['result']['movies'])
